@@ -8,7 +8,8 @@ class nginx {
 		source	=> '/etc/modules/nginx/templates/nginx.conf',
 	}
 
-	file { "/var/www/eeromikkonen/":
+	file { ['/var/www/',
+		'/var/www/eeromikkonen/', ]:
 		ensure	=> 'directory',
 		owner	=> 'nginx',
 		group	=> 'nginx',
