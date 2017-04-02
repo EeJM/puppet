@@ -12,6 +12,7 @@ class nginx {
 		ensure	=> 'directory',
 		owner	=> 'nginx',
 		group	=> 'nginx',
+		recurse => true,
 		mode	=> '0744',
 	}
 
