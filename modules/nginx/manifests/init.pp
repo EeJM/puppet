@@ -5,7 +5,7 @@ class nginx {
 	}
 
 	file { "/etc/nginx/nginx.conf":
-		source	=> '/etc/modules/nginx/templates/nginx.conf',
+		source	=> '/etc/puppet/modules/nginx/templates/nginx.conf',
 	}
 
 	file { ['/var/www/',
