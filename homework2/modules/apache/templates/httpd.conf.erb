@@ -357,7 +357,8 @@ IncludeOptional conf.d/*.conf
 <VirtualHost *:80>
 	ServerName eero.testi.com
 	ServerAlias www.eero.testi.com
-	<Directory /home/eero/public_html>
+	DocumentRoot /var/www/eero.testi.com/
+	<Directory /var/www/eero.testi.com/>
 		Require all granted
 	</Directory>
 </virtualHost>
