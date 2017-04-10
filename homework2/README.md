@@ -37,6 +37,10 @@ if $operatingsystem == 'CentOS' {
 }
 ```
 
+## Lopputesti
+
+Ajoin moduulin sekä Centos koneella jolla kirjoitin dokumentaation ja Ubuntu koneella. Molemmilla testaamillani koneilla Apache asentui ja konfiguroitui oikein. Pystyin hakemaan sekä IP osoitteella oletussivun ja nimellä eero.testi.com virtuaalihostin sivun.
+
 ## Lähteet
 
 https://docs.puppet.com/
