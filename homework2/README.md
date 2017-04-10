@@ -18,5 +18,4 @@ Puppet on valmiina asennettuna koneelle (versio 3.6.2)
 
 Loin hakemiston /etc/puppet/modules/apache/ ja sen alle kaksi hakemistoa manifests ja templates. (mkdir /etc/puppet/modules/apache && mkdir /etc/puppet/modules/apache/manifests; mkdir /etc/puppet/modules/apache/templates)
 
-Tein tiedoston init.pp manifests hakemistoon ja aloin lisäsin sinne 
-
+Tein tiedoston init.pp manifests hakemistoon ja aloin lisäsin sinne tarvittavat tiedot apachen asentamiseksi, ja yhden virtuaalihostin luomiseksi. Käytin hyväkseni templateja. Toinen template toimii red hat pohjaisissa distribuutioissa ja toinen taas debian pohjaisissa.
