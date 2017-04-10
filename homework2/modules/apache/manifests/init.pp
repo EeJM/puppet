@@ -69,7 +69,7 @@ class apache {
 	}
 	else {
 
-		file { '/etc/apache2/sites_enabled/eero.conf':
+		file { '/etc/apache2/sites-enabled/eero.conf':
 			content	=> template('apache/eero.conf.erb'),
 			require => Package['apache2'],
 			notify	=> Service['apache2'],
