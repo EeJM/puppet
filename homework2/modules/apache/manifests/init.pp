@@ -2,8 +2,10 @@ class apache {
 
 	if $operatingsystem == 'CentOS' {
 		$apache = "httpd"
+		$vhostPath = "/etc/httpd/conf.d"
 	} else {
 		$apache = "apache2"
+		$vhostPath = "/etc/apache2/sites-enabled"
 	}
 	package {$apache:
 		ensure		=> 'latest',
@@ -54,50 +56,19 @@ class apache {
 	#	require	=> User['eero'],
 	#}
 
-	if $operatingsystem == 'CentOS' {
-
-		file { '/etc/httpd/conf/httpd.conf':
-			content	=> template('apache/httpd.conf.erb'),
-			require	=> Package['httpd'],
-			notify	=> Service['httpd'],
-		}
-
-
-	}
-	else {
-
-		file { '/etc/apache2/sites-enabled/eero.conf':
-			content	=> template('apache/eero.conf.erb'),
-			require => Package['apache2'],
-			notify	=> Service['apache2'],
-		}
+	file { "$vhostPath/eero.conf":
+		content	=> template('apache/eero.conf.erb'),
+		require	=> Package[$apache],
+		notify	=> Service[$apache],
 	}
 
-	if $operatingsystem == 'CentOS' {
-
-		file { '/var/www/html/index.html':
-			content => 'This is the default landing page.',
-			require => Package['httpd'],
-		}
-	}
-	else {
-		file { '/var/www/html/index.html':
-                        content => 'This is the default landing page.',
-                        require => Package['apache2'],
-                }
+	file { "/var/www/html/index.html":
+		content => 'This is the default landing page.',
+		require => Package[$apache],
 	}
 
-
-	if $operatingsystem == 'CentOS' {
-		service { 'httpd':
-			ensure	=> 'running',
-			enable	=> 'true',
-		}
-	}
-	else {
-		service { 'apache2':
-			ensure	=> 'running',
-			enable	=> 'true',
-		}
+	service { $apache:
+		ensure	=> 'running',
+		enable	=> 'true',
 	}
 }
