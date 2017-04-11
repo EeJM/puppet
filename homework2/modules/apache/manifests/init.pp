@@ -1,16 +1,13 @@
 class apache {
 
 	if $operatingsystem == 'CentOS' {
-		package {'httpd':
-			ensure		=> 'latest',
-			allow_virtual	=> 'true',
-		}
+		$apache = "httpd"
+	} else {
+		$apache = "apache2"
 	}
-	else {
-		package {'apache2':
-			ensure		=> 'latest',
-			allow_virtual	=> 'true',
-		}
+	package {$apache:
+		ensure		=> 'latest',
+		allow_virtual	=> 'true',
 	}
 
 	file { ['/var/www/',
