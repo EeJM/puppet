@@ -1,0 +1,30 @@
+# Use this in your module if you want the virtual host inside of a users home folder.
+
+user { 'eero':
+	ensure	=> 'present',
+	home	=> '/home/eero',
+	# The password is hashed and since this is a test script the password is: bJyTK6!K6M6-Ae!KD
+	password => '$6$Gx6ZKz0m$v9NyqeDpTb/7w025j0DF80gNg0v.yZmLf8TtoI7BcqkH7Ij8spj9tkBSSQKGMrWjwmAkUUy39k6n..uLUoSX40',
+}
+
+file { '/home/eero/':
+	ensure	=> 'directory',
+	mode	=> '0755',
+	require => User['eero'],
+}
+
+file { '/home/eero/public_html/':
+	ensure	=> 'directory',
+	owner	=> 'eero',
+	group	=> 'eero',
+	mode	=> '0755',
+	require	=> User['eero'],
+}
+
+file { '/home/eero/public_html/index.html':
+	owner	=> 'eero',
+	group	=> 'eero',
+	content	=> 'This is the working virtualhost for Eero.',
+	mode	=> '0644',
+	require	=> User['eero'],
+}
