@@ -7,7 +7,12 @@ class sshd {
 
 	service { 'sshd':
 		ensure	=> 'running',
-		enabled	=> 'true',
-		
+		enable	=> 'true',	
+	}
+
+	file { '/etc/ssh/sshd_config':
+		content		=> template('sshd/sshd_config.erb'),
+		require		=> Package['openssh-server'],
+		notify		=> Service['sshd'],
 	}
 }
