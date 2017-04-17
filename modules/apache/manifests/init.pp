@@ -3,32 +3,51 @@ class apache {
 	if $operatingsystem == 'CentOS' {
 		$apache = "httpd"
 		$vhostPath = "/etc/httpd/conf.d"
+
 	} else {
 		$apache = "apache2"
 		$vhostPath = "/etc/apache2/sites-enabled"
+
+
 	}
+
+	define apachevhost {
+		file { "/etc/httpd/conf.d/${title}.conf":
+			ensure	=> 'present',
+			mode	=> '0644',
+			content	=> template("apache/vhost.conf.erb"),
+			require => Package['httpd'],
+			notify  => Service['httpd'],
+		}
+
+		file { "/var/www/${title}/":
+			ensure	=> 'directory',
+			mode	=> '0755',
+		}
+
+		file { "/var/www/${title}/index.html":
+			ensure	=> 'present',
+			mode	=> '0644',
+			content	=> "This is a virtualhost ${title}\n"
+		}
+	}
+
 	package {$apache:
 		ensure		=> 'latest',
 		allow_virtual	=> 'true',
 	}
 
-	file { ['/var/www/',
-		'/var/www/eero.testi.com/', ]:
+	file { '/var/www/':
 		ensure	=> 'directory',
-		mode	=> '0755',
+		mode	=> '0775',
+	}
+
+	apachevhost { "testsite":
 		
 	}
 
-	file { '/var/www/eero.testi.com/index.html':
-		ensure	=> 'present',
-		mode	=> '0644',
-		content => 'This is the working virtualhost.',
-	}
+	apachevhost { "testsite2":
 
-	file { "$vhostPath/eero.conf":
-		content	=> template('apache/eero.conf.erb'),
-		require	=> Package[$apache],
-		notify	=> Service[$apache],
 	}
 
 	file { "/var/www/html/index.html":

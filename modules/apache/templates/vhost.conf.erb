@@ -1,0 +1,8 @@
+<VirtualHost *:80>
+        ServerName <%= @title %>.eeromikkonen.com
+        ServerAlias www.<%= @title %>.eeromikkonen.com
+        DocumentRoot /var/www/<%= @title %>/
+        <Directory /var/www/<%= @title %>/>
+                Require all granted
+        </Directory>
+</virtualHost>
