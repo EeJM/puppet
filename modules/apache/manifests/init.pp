@@ -12,12 +12,12 @@ class apache {
 	}
 
 	define apachevhost {
-		file { "/etc/httpd/conf.d/${title}.conf":
+		file { "/etc/apache2/sites-enabled/${title}.conf":
 			ensure	=> 'present',
 			mode	=> '0644',
 			content	=> template("apache/vhost.conf.erb"),
-			require => Package['httpd'],
-			notify  => Service['httpd'],
+			require => Package['apache'],
+			notify  => Service['apache'],
 		}
 
 		file { "/var/www/${title}/":
@@ -32,7 +32,8 @@ class apache {
 		}
 	}
 
-	package {$apache:
+	package {'apache':
+		name		=> "$apache",
 		ensure		=> 'latest',
 		allow_virtual	=> 'true',
 	}
@@ -42,12 +43,8 @@ class apache {
 		mode	=> '0775',
 	}
 
-	apachevhost { "testsite":
+	apachevhost { "sami":
 		
-	}
-
-	apachevhost { "testsite2":
-
 	}
 
 	file { "/var/www/html/index.html":
@@ -55,7 +52,8 @@ class apache {
 		require => Package[$apache],
 	}
 
-	service { $apache:
+	service { 'apache':
+		name	=> "$apache",
 		ensure	=> 'running',
 		enable	=> 'true',
 	}
